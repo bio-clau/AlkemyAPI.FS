@@ -1,0 +1,19 @@
+### update user
+PUT http://localhost:4000/api/user/updateUser/f762594c-6fec-4e35-a073-cf2fac43f603
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImY3NjI1OTRjLTZmZWMtNGUzNS1hMDczLWNmMmZhYzQzZjYwMyIsImlhdCI6MTY1MzkyODY5MiwiZXhwIjoxNjUzOTMwNDkyfQ.Wblpw0uYVuu6S50fvcqL1pON7sOmE0mAMLlNFQ81xos
+Content-Type: application/json
+
+{
+    "email": "foca@gmail.com",
+    "firstName": "Focarda",
+    "lastName": "Locarda"
+    
+}
+
+### update password
+PUT http://localhost:4000/api/user/updatePass/5b78495b-8d92-4f90-b18b-4d3a3b6981e4
+Content-Type: application/json
+
+{
+    "newPass": "f4d3s2a1"
+}

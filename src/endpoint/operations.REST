@@ -1,0 +1,22 @@
+### add Operation
+POST http://localhost:4000/api/op/addOp/d50c60dd-f77a-4c8a-9b05-e5ef875801ec
+Content-Type: application/json
+
+{
+    "typeOp": "expenses",
+    "amount": 300,
+    "concept": "dev"
+}
+
+
+### get operation
+GET http://localhost:4000/api/op/allOp/d50c60dd-f77a-4c8a-9b05-e5ef875801ec
+
+
+### update Operation
+PUT http://localhost:4000/api/op/updateOp/6cbef2a1-b3dc-4e08-9836-526dd3e6b15b
+Content-Type: application/json
+
+{
+    "concept": "dev algo algo"
+}
