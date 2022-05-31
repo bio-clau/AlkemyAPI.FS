@@ -90,3 +90,35 @@ exports.updateOp = async (req, res, next) => {
         next(err)
     }
 }
+
+exports.deleteOp = async (req, res, next) => {
+    //operation ID
+    const {id} = req.params;
+    try {
+        const operation = await Operation.findByPk(id)
+        const user = await User.findByPk(operation.userId)
+        if(operation.typeOp === 'income'){
+            user.total = user.total-operation.amount
+        }
+        if(operation.typeOp === 'expenses'){
+            user.total = user.total+operation.amount
+        }
+        if(!operation) {
+            return next(new ErrorResponse('Operation Not Found', 404))
+        }
+        const result = Operation.destroy({
+            where:{id}
+        })
+        if(result === 0) {
+            return next(new ErrorResponse('Deleted Failed', 400))
+        }
+        await user.save();
+        res.status(200).json({
+            success: true,
+            msg: 'Delete successfully'
+        })
+    } catch (err) {
+        next(err)
+    }
+
+}

@@ -1,20 +1,28 @@
 ### add Operation
-POST http://localhost:4000/api/op/addOp/d50c60dd-f77a-4c8a-9b05-e5ef875801ec
+POST http://localhost:4000/api/op/addOp/0efc0fca-509f-401f-9f72-6518d2a02668
 Content-Type: application/json
 
 {
     "typeOp": "expenses",
-    "amount": 300,
-    "concept": "dev"
+    "amount": 30,
+    "concept": "dev2"
 }
 
 
 ### get operation
-GET http://localhost:4000/api/op/allOp/d50c60dd-f77a-4c8a-9b05-e5ef875801ec
+GET http://localhost:4000/api/op/allOp/0efc0fca-509f-401f-9f72-6518d2a02668
 
 
 ### update Operation
-PUT http://localhost:4000/api/op/updateOp/6cbef2a1-b3dc-4e08-9836-526dd3e6b15b
+PUT http://localhost:4000/api/op/updateOp/6009c985-a357-4b65-ad47-5dc1610fc8a3
+Content-Type: application/json
+
+{
+    "concept": "dev algo algo"
+}
+
+### delete Operation
+DELETE http://localhost:4000/api/op/deleteOp/62728d51-bc97-4221-a01a-09d7f553a25a
 Content-Type: application/json
 
 {
