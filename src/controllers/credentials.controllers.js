@@ -123,3 +123,18 @@ exports.resetPass = async (req, res, next) => {
         next(err)
     }
 }
+
+exports.whoami = async (req, res, next) =>{
+    const user = req.user
+    let token
+    try {
+        token = await user.getSignedToken()
+    } catch (err) {
+        next(err)
+    }
+    res.status(200).json({
+        success: true,
+        data: user,
+        token: token
+    })
+}

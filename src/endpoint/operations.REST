@@ -1,11 +1,11 @@
 ### add Operation
-POST http://localhost:4000/api/op/addOp/0efc0fca-509f-401f-9f72-6518d2a02668
+POST http://localhost:4000/api/op/addOp/bec04df1-b1f4-4898-866c-ceedfcbd878f
 Content-Type: application/json
 
 {
-    "typeOp": "expenses",
-    "amount": 30,
-    "concept": "dev2"
+    "typeOp": "income",
+    "amount": 300,
+    "concept": "concept 2"
 }
 
 

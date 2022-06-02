@@ -34,7 +34,7 @@ app.use(errorHandler);
 const PORT = process.env.PORT || 4000;
 async function mainServer() {
   try {
-    await sequelize.sync({ force: true });
+    await sequelize.sync({ force: false });
     server = app.listen(PORT, () => {
       console.log(`Server listening on port ${PORT}`);
     });
