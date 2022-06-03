@@ -23,7 +23,13 @@ exports.updateUser = async (req, res, next) => {
         res.status(201).json({
             success:true,
             msg:'User updated',
-            data: user
+            data: {
+                id: user.id,
+                firstName: user.firstName,
+                lastName: user.lastName,
+                email: user.email,
+                image:user.image
+            }
         })
     } catch (err) {
         next(err)
@@ -43,8 +49,14 @@ exports.updatePass = async (req, res, next) => {
         await user.save();
         res.status(201).json({
             success:true,
-            msg:'User updated',
-            data: user
+            msg:'Password updated',
+            data: {
+                id: user.id,
+                firstName: user.firstName,
+                lastName: user.lastName,
+                email: user.email,
+                image:user.image
+            }
         })
     } catch (err) {
         next(err)

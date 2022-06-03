@@ -9,7 +9,7 @@ exports.register = async (req, res, next) => {
     const {email, firstName, lastName, password, image} = req.body;
     try {
         if(!email || !firstName || !lastName || !password) {
-            next(new ErrorResponse('Missing Fields', 400))
+            return next(new ErrorResponse('Missing Fields', 400))
         }
         let result = {}
         if(!image) {
@@ -31,7 +31,13 @@ exports.register = async (req, res, next) => {
             success:true,
             token: token,
             msg:'User created',
-            data: user
+            data: {
+                id: user.id,
+                firstName: user.firstName,
+                lastName: user.lastName,
+                email: user.email,
+                image:user.image
+            }
         })
     } catch (err) {
         next(err)
@@ -60,7 +66,13 @@ exports.login = async (req, res, next) => {
             success:true,
             token: token,
             msg: 'Login successfull',
-            data: user
+            data: {
+                id: user.id,
+                firstName: user.firstName,
+                lastName: user.lastName,
+                email: user.email,
+                image:user.image
+            }
         })
     } catch (err) {
         next(err)
@@ -134,7 +146,13 @@ exports.whoami = async (req, res, next) =>{
     }
     res.status(200).json({
         success: true,
-        data: user,
+        data: {
+            id: user.id,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            email: user.email,
+            image:user.image
+        },
         token: token
     })
 }

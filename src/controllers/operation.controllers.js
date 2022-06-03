@@ -28,22 +28,19 @@ exports.addOp = async (req, res, next) => {
     //user ID
     const {id} = req.params;
     const {typeOp, amount, concept} = req.body;
+    let subtotal
     try {
-        console.log('amount', amount)
-        console.log('id', id)
         const user = await User.findByPk(id);
-        console.log('user', user)
         if(!user) {
             return next(new ErrorResponse('User Not Found', 404))
         }
-        console.log('punto1')
-        console.log('total before', user.total)
         if(typeOp === 'income') {
             user.total = user.total + amount
-            console.log('suma', user.total)
+            subtotal = user.total + amount
         }
         if(typeOp === 'expenses') {
             user.total = user.total - amount
+            subtotal = user.total - amount
         }
         await user.save()
         if(!typeOp || !amount || !concept) {
@@ -53,6 +50,7 @@ exports.addOp = async (req, res, next) => {
             id:uuidv4(),
             typeOp,
             amount,
+            subtotal,
             concept,
             userId: id
         })

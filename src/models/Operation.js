@@ -14,6 +14,10 @@ const Operation = db.sequelize.define("operations", {
     type: DataTypes.FLOAT,
     allowNull: false,
   },
+  subtotal: {
+    type: DataTypes.FLOAT,
+    allowNull: false,
+  },
   date: {
     type: DataTypes.DATE,
     defaultValue: DataTypes.NOW,

@@ -1,11 +1,12 @@
 ### add Operation
-POST http://localhost:4000/api/op/addOp/bec04df1-b1f4-4898-866c-ceedfcbd878f
+POST http://localhost:4000/api/op/addOp/c76fe122-7478-46cc-9100-467322c3bf77
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImM3NmZlMTIyLTc0NzgtNDZjYy05MTAwLTQ2NzMyMmMzYmY3NyIsImlhdCI6MTY1NDI4ODMwMywiZXhwIjoxNjU0MjkwMTAzfQ.dPGw-NbO94eM5EuWKD-QotY4VMo3zhqRBcD9N1XQ1uU
 Content-Type: application/json
 
 {
-    "typeOp": "income",
-    "amount": 300,
-    "concept": "concept 2"
+    "typeOp": "expenses",
+    "amount": 40,
+    "concept": "concept e"
 }
 
 
