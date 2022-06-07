@@ -28,7 +28,8 @@ exports.updateUser = async (req, res, next) => {
                 firstName: user.firstName,
                 lastName: user.lastName,
                 email: user.email,
-                image:user.image
+                image:user.image,
+                total: user.total
             }
         })
     } catch (err) {
@@ -55,7 +56,8 @@ exports.updatePass = async (req, res, next) => {
                 firstName: user.firstName,
                 lastName: user.lastName,
                 email: user.email,
-                image:user.image
+                image:user.image,
+                total: user.total
             }
         })
     } catch (err) {

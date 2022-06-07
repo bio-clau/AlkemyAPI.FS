@@ -20,6 +20,6 @@ exports.protect = async (req, res, next) => {
         req.user = user;
         next()
     } catch (err) {
-        next(new ErrorResponse('Not authorized', 401))
+        next(new ErrorResponse('Must login', 401))
     }
 }
