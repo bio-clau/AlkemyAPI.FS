@@ -27,8 +27,8 @@ const User = db.sequelize.define("users", {
     allowNull: false,
   },
   role: {
-    type: DataTypes.ENUM('2781', '1190'),
-    defaultValue: '2781',
+    type: DataTypes.ENUM("2781", "1190"),
+    defaultValue: "2781",
   },
   password: {
     type: DataTypes.STRING,
@@ -67,20 +67,24 @@ User.prototype.matchPassword = async function (pass) {
 };
 
 User.prototype.getSignedToken = async function () {
-  return jwt.sign({ 
-    UserInfo: {
-    id: this.id,
-    role: this.role
+  return jwt.sign(
+    {
+      UserInfo: {
+        id: this.id,
+        role: this.role,
+      },
+    },
+    process.env.ACCESS_TOKEN_SECRET,
+    {
+      expiresIn: process.env.JWT_EXPIRE,
     }
-   }, process.env.ACCESS_TOKEN_SECRET, {
-    expiresIn: process.env.JWT_EXPIRE,
-  });
+  );
 };
 
 User.prototype.getRefreshToken = async function () {
-  return jwt.sign({id:this.id},
-    process.env.REFRESH_TOKEN_SECRET,
-    {expiresIn: '1d'});
+  return jwt.sign({ id: this.id }, process.env.REFRESH_TOKEN_SECRET, {
+    expiresIn: "1d",
+  });
 };
 
 User.prototype.getResetPasswordToken = async function () {

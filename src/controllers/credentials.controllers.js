@@ -42,7 +42,8 @@ exports.register = async (req, res, next) => {
     res.cookie("jwt", refreshToken, {
       httpOnly: true,
       maxAge: 24 * 60 * 60 * 1000,
-      sameSite:'None'
+      sameSite: "None",
+      secure: true,
     });
     //Agregar cuando pruebe con front: sameSite:'None', secure:true
     res.status(201).json({
@@ -85,10 +86,11 @@ exports.login = async (req, res, next) => {
     user.refreshToken = refreshToken;
     await user.save();
     res.cookie("jwt", refreshToken, {
-        httpOnly: true,
-        maxAge: 24 * 60 * 60 * 1000,
-        sameSite:'None'
-      });
+      httpOnly: true,
+      maxAge: 24 * 60 * 60 * 1000,
+      sameSite: "None",
+      secure: true,
+    });
     //Agregar cuando pruebe con front: sameSite:'None', secure:true
 
     res.status(200).json({
@@ -210,7 +212,8 @@ exports.logout = async (req, res, next) => {
       res.clearCookie("jwt", {
         httpOnly: true,
         maxAge: 24 * 60 * 60 * 1000,
-        sameSite:'None'
+        sameSite: "None",
+        secure: true,
       });
       return req.status(204).json({
         success: true,
@@ -220,7 +223,12 @@ exports.logout = async (req, res, next) => {
     foundUser.refreshToken = "";
     await foundUser.save();
     //deben ir las mismas opciones que en login y register
-    res.clearCookie("jwt", { httpOnly: true, maxAge: 24 * 60 * 60 * 1000 });
+    res.clearCookie("jwt", {
+      httpOnly: true,
+      maxAge: 24 * 60 * 60 * 1000,
+      sameSite: "None",
+      secure: true,
+    });
     return res.status(204).json({
       success: true,
       msg: "Log out successfully",

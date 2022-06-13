@@ -77,18 +77,14 @@ exports.refreshToken = async (req, res, next) => {
       },
     });
     if (!foundUser) return next(new ErrorResponse("Forbidden", 403));
-    const decoded = jwt.verify(
-      refreshToken,
-      process.env.REFRESH_TOKEN_SECRET,
-    );
-        if (foundUser.id !== decoded.id)
-          return next(new ErrorResponse("Forbidden", 403));
-        const accessToken = await foundUser.getSignedToken();
-        console.log("🚀 ~ file: user.controllers.js ~ line 87 ~ exports.refreshToken= ~ accessToken", accessToken)
-        res.status(200).json({
-          success: true,
-          acccessToken: accessToken,
-        });
+    const decoded = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET);
+    if (foundUser.id !== decoded.id)
+      return next(new ErrorResponse("Forbidden", 403));
+    const accessToken = await foundUser.getSignedToken();
+    res.status(200).json({
+      success: true,
+      acccessToken: accessToken,
+    });
   } catch (err) {
     next(err);
   }

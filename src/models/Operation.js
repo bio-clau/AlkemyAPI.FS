@@ -27,7 +27,17 @@ const Operation = db.sequelize.define("operations", {
     allowNull: false,
   },
   category: {
-    type: DataTypes.ENUM('food', 'clothes', 'perfumery', 'farmacy', 'technology', 'bills', 'fee', 'freelancer', 'other'),
+    type: DataTypes.ENUM(
+      "food",
+      "clothes",
+      "perfumery",
+      "farmacy",
+      "technology",
+      "bills",
+      "fee",
+      "freelancer",
+      "other"
+    ),
     allowNull: false,
   },
 });

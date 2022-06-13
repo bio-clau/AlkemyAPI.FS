@@ -62,11 +62,11 @@ exports.addOp = async (req, res, next) => {
     const operation = await Operation.create(info);
     await user.save();
     const operations = await Operation.findAll({
-        where: {
-          userId: id,
-        },
-        order: [["date", "DESC"]],
-      });
+      where: {
+        userId: id,
+      },
+      order: [["date", "DESC"]],
+    });
 
     res.status(201).json({
       success: true,
@@ -94,11 +94,11 @@ exports.updateOp = async (req, res, next) => {
     operation.category = category;
     await operation.save();
     const operations = await Operation.findAll({
-        where: {
-          userId: operation.userId,
-        },
-        order: [["date", "DESC"]],
-      });
+      where: {
+        userId: operation.userId,
+      },
+      order: [["date", "DESC"]],
+    });
     res.status(200).json({
       success: true,
       msg: "Updated successfully",

@@ -2,10 +2,10 @@
 require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
-const cookieParser = require('cookie-parser')
+const cookieParser = require("cookie-parser");
 const { sequelize } = require("./config/db");
-const corsOptions = require('./config/corsOptions')
-const errorHandler = require('./middlewares/errorHandler');
+const corsOptions = require("./config/corsOptions");
+const errorHandler = require("./middlewares/errorHandler");
 const morgan = require("morgan");
 require("./models/User");
 require("./models/Operation");
@@ -14,16 +14,16 @@ require("./models/Operation");
 const app = express();
 
 //Middelwares
-app.use(morgan('dev'))
+app.use(morgan("dev"));
 app.use(cors(corsOptions));
-app.use(express.json({ limit: '50mb' }));
-app.use(express.urlencoded({ extended: true, limit: '50mb' }));
-app.use(cookieParser())
+app.use(express.json({ limit: "50mb" }));
+app.use(express.urlencoded({ extended: true, limit: "50mb" }));
+app.use(cookieParser());
 
 //Routes
-app.use('/api/auth', require('./routes/public.routes'));
-app.use('/api/user', require('./routes/private.routes'));
-app.use('/api/op', require('./routes/operation.routes'));
+app.use("/api/auth", require("./routes/public.routes"));
+app.use("/api/user", require("./routes/private.routes"));
+app.use("/api/op", require("./routes/operation.routes"));
 
 //Error handler
 app.use(errorHandler);
