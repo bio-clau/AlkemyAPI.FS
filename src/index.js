@@ -2,7 +2,9 @@
 require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
+const cookieParser = require('cookie-parser')
 const { sequelize } = require("./config/db");
+const corsOptions = require('./config/corsOptions')
 const errorHandler = require('./middlewares/errorHandler');
 const morgan = require("morgan");
 require("./models/User");
@@ -13,14 +15,10 @@ const app = express();
 
 //Middelwares
 app.use(morgan('dev'))
-app.use(
-  cors({
-    origin: "*",
-    credentials: true,
-  })
-);
+app.use(cors(corsOptions));
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ extended: true, limit: '50mb' }));
+app.use(cookieParser())
 
 //Routes
 app.use('/api/auth', require('./routes/public.routes'));

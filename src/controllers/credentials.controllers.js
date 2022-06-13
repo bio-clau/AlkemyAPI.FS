@@ -11,6 +11,12 @@ exports.register = async (req, res, next) => {
         if(!email || !firstName || !lastName || !password) {
             return next(new ErrorResponse('Missing Fields', 400))
         }
+        const duplicate = await User.findAll({
+            where:{
+                email:email
+            }
+        })
+        if(duplicate.length > 0) return next(new ErrorResponse('email already in use'), 400)
         let result = {}
         if(!image) {
             result = {url:'https://res.cloudinary.com/tropura/image/upload/v1653866106/guest-user_je8e9t.jpg'}
@@ -18,7 +24,7 @@ exports.register = async (req, res, next) => {
             result = await cloudinary.uploader.upload(image);
             if(!result) return next(new ErrorResponse('Image Upload Failed', 503));
         }
-        const user = await User.create({
+        let user = await User.create({
             id:uuidv4(),
             image: result.url,
             email,
@@ -26,10 +32,15 @@ exports.register = async (req, res, next) => {
             lastName,
             password
         })
-        const token = await user.getSignedToken()
+        const accessToken = await user.getSignedToken()
+        const refreshToken = await user.getRefreshToken()
+        user.refreshToken = refreshToken
+        const aux = await user.save()
+        res.cookie('jwt', refreshToken, {httpOnly: true, maxAge: 24*60*60*1000})
+        //Agregar cuando pruebe con front: sameSite:'None', secure:true
         res.status(201).json({
             success:true,
-            token: token,
+            accessToken: accessToken,
             msg:'User created',
             data: {
                 id: user.id,
@@ -62,10 +73,16 @@ exports.login = async (req, res, next) => {
         if(!match){
             return next(new ErrorResponse('Invalid Credentials', 401))
         }
-        const token = await user.getSignedToken()
+        const accessToken = await user.getSignedToken()
+        const refreshToken = await user.getRefreshToken()
+        user.refreshToken = refreshToken;
+        await user.save()
+        res.cookie('jwt', refreshToken, {httpOnly: true, maxAge: 24*60*60*1000})
+        //Agregar cuando pruebe con front: sameSite:'None', secure:true
+
         res.status(200).json({
             success:true,
-            token: token,
+            accessToken: accessToken,
             msg: 'Login successfull',
             data: {
                 id: user.id,
@@ -142,7 +159,7 @@ exports.whoami = async (req, res, next) =>{
     const user = req.user
     let token
     try {
-        token = await user.getSignedToken()
+        accessToken = await user.getSignedToken()
     } catch (err) {
         next(err)
     }
@@ -156,6 +173,6 @@ exports.whoami = async (req, res, next) =>{
             image:user.image,
             total: user.total
         },
-        token: token
+        accessToken: accessToken
     })
 }

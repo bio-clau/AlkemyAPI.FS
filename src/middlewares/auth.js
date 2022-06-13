@@ -12,12 +12,13 @@ exports.protect = async (req, res, next) => {
         return next(new ErrorResponse('Not Authorized', 401));
     }
     try {
-        const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        const user = await User.findByPk(decoded.id);
+        const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
+        const user = await User.findByPk(decoded.UserInfo.id);
         if(!user) {
             return next(new ErrorResponse('User Not Found', 404))
         }
         req.user = user;
+        req.roles = decoded.UserInfo.role
         next()
     } catch (err) {
         next(new ErrorResponse('Must login', 401))
